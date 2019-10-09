@@ -7,6 +7,8 @@ Usage:	docker container COMMAND
 
 docker container list
 
+docker image ls
+
 docker container ls    
 
 docker container ls -a
@@ -19,9 +21,11 @@ docker container run -d -it ubuntu /bin/bash
 
 docker container run -it ubuntu /bin/bash
 
-docker container stop 8e76cf05adee .         
+docker container stop 8e76cf05adee 
 
+docker container start 8e76cf05adee                     :: start stopped container
 
+detach container Ctrl+p+q
 
  # what's going on inside container
  docker container top 8e76cf05adee                         :: Display the running processes of a container
@@ -61,6 +65,68 @@ docker container prune                               :: delete your all stopped 
 docker container port container_id/container_name      :: check the bind port with your host machine 
  
  # create docker container, diff docker container and copy file into container
+ 
+docker container diff 8e76cf05adee         :: It'll show you modify files system inside container files/directories (A : add, C: create, D: delete)
+
+watch 'docker container diff 8e76cf05adee'  :: watch modify files in container 
+
+docker container cp /tmp/abc.txt 8e76cf05adee:/tmp/    :: copy file into container
+
+docker container attach 8e76cf05adee           :: check copied files inside container
+
+# Export/Import docker container
+
+docker container export 8e76cf05adee > export_image.tar     :: Export your container images with .tar file
+
+docker container export 8e76cf05adee -o  export_image.tar   :: Export your container images with .tar file
+
+docker image import export_image.tar new_export_image        :: import .tar file imange as conatiner 
+
+docker image  ls | grep new_export_image 
+
+docker container run  -it new_export_image /bin/bash        :: to run the new_export_image 
+
+
+# how to create docker image from running container (docker commit)
+
+docker container commit --author "Ajay Rajput" -m "this is new test image" 8e76cf05adee new_commit_images  :: commit image
+
+docker container run -it new_commit_images /bin/bash
+
+
+# How to push image on docker hub, image tag, image pull, docker login
+
+docker pull ubuntu:18.04             :: pull image from docker hub with sepific tag like :18.04
+
+docker image tag ubuntu:18.04 onkardevops/ubuntu:18.04_latest :: tag exist ubuntu:18.04 image
+
+docker login
+
+docker push onkardevops/ubuntu:18.04_latest         :: push on github account
+
+docker pull onkardevops/ubuntu:18.04_latest          :: download in your system
+
+
+# How to inspect remove,inspect, list and history for the docker image
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
  
 
 
