@@ -3,6 +3,8 @@
 
 ## create a container in background, stop,start,detach container
 
+Usage:	docker container COMMAND
+
 docker container list
 
 docker container ls    
@@ -19,15 +21,30 @@ docker container run -it ubuntu /bin/bash
 
 docker container stop 8e76cf05adee .         
 
-docker container inspact 8e76cf05adee                                :: Display detailed information on one or more containers
 
-docker container inspact 8e76cf05adee                                :: Fetch the logs of a container
 
  # what's going on inside container
- docker container top 8e76cf05adee                                     :: Display the running processes of a container
+ docker container top 8e76cf05adee                         :: Display the running processes of a container
  
  docker container stats                                    :: Display a live stream of container(s) resource usage statistics
+ 
+ docker container inspact 8e76cf05adee                     :: Display detailed information on one or more containers
+
+docker container logs 8e76cf05adee                         :: Fetch the logs of a container
       
+ # Docker port mapping, rename container, restart container, exec container
+ 
+ docker container run -d -p 80:8081 --name test_nginx nginx       :: run nginx container with port 80 to 8081 name  test_nginx
+ 
+ docker container exec -it 8e76cf05adee /bin/bash                 ::  login in existinf running instance 
+ 
+ docker container rename  8e76cf05adee newtest_nginx       :: rename your existing container name test_nginx to newtest_nginx
+ 
+ docker container restart  8e76cf05adee                    :: restart existing container
+ 
+ 
+ 
+ 
  
 
 
