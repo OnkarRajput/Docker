@@ -1,4 +1,4 @@
-# Docker
+# Docker Basic to Advance 
 
 
 ## create a container in background, stop,start,detach container
@@ -32,7 +32,7 @@ docker container stop 8e76cf05adee .
 
 docker container logs 8e76cf05adee                         :: Fetch the logs of a container
       
- # Docker port mapping, rename container, restart container, exec container
+# Docker port mapping, rename container, restart container, exec container
  
  docker container run -d -p 80:8081 --name test_nginx nginx       :: run nginx container with port 80 to 8081 name  test_nginx
  
@@ -42,9 +42,25 @@ docker container logs 8e76cf05adee                         :: Fetch the logs of 
  
  docker container restart  8e76cf05adee                    :: restart existing container
  
+# Attach to running container, kill, wait, pause, unpause, prune, port
+  
+docker container attach 8e76cf05adee              :: attach container inside the env.
+  
+docker container kill 8e76cf05adee                :: kill container immediately
  
+docker container wait 8e76cf05adee                 :: waiting  to container stop 
  
+docker container stop 8e76cf05adee                  :: stop container wiith soft way
  
+docker container pause 8e76cf05adee                 :: Pause resources for your container
+ 
+docker container unpause 8e76cf05adee                :: unpause your container resources 
+ 
+docker container prune                               :: delete your all stopped containers
+ 
+docker container port container_id/container_name      :: check the bind port with your host machine 
+ 
+ # create docker container, diff docker container and copy file into container
  
 
 
