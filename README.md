@@ -129,10 +129,161 @@ docker image import     :: single layer without all parent layer, save tag, name
 
 docker container expot :: save only one layer without taking volume backup 
 
-## Dockerfile
+## How to create Dockerfile 
 
  
 # Dockerfile (add, copy, user) difference between copy and add in docker file
+
+FROM ubuntu:18.04
+LABEL name : "Ajay Rajput"
+LABEL email : "onkar.devops@gmail.com"
+ENV NAME ajay 
+ENV PASS password@123
+RUN pwd >/tmp/test.txt
+RUN cd /tmp
+RUN pwd >/tmp/test1.txt
+WORKDIR /tmp                   :: Define working directory 
+RUN pwd >/tmp/test2.txt
+RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
+RUN whoiam > /tmp/test3.txt
+USER $NAME                                               :: switch in ajay user
+RUN whoami  > /tmp/test3.txt
+COPY test.tar /tmp                         :: COPY only copy test.tar file to /tmp
+ADD test1.tar /tmp                         :: ADD extract test1.tar to  /tmp  
+CMD ["/bin/bash"]                       :: Define default command.
+
+# Dockerfile ( Expose and create a SSH container using dockerfile )
+
+FROM ubuntu:18.04
+LABEL name : "Ajay Rajput"
+LABEL email : "onkar.devops@gmail.com"
+ENV NAME ajay 
+ENV PASS password@123
+RUN apt-get update && apt-get install -y openssh-server 
+RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
+EXPOSE 22 443 80                   :: open ports
+ CMD ["/usr/sbin/sshd",  "-D"]                         :: Define default command.
+
+docker image build -t ubuntu:18.04_latest .
+
+docker container run -itd ubuntu:18.04_latest
+
+docker container ls
+
+# Dockerfile (Entrypoint)
+
+FROM ubuntu:18.04
+LABEL name : "Ajay Rajput"
+LABEL email : "onkar.devops@gmail.com"
+ENV NAME ajay 
+ENV PASS password@123
+RUN mkdir -p /var/run/sshd
+RUN apt-get update && apt-get install -y python tee
+COPY test.sh /tmp/
+ENTRYPOINT ["/tmp/tesh.sh"]
+
+
+# Docker Volume ( Docker Storage), mysql data persist in docker container
+
+docker container run --name mysql_instance -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql
+
+docker volume ls 
+
+docker volume create abc
+
+docker volume inspect abc
+
+docker container run -itd -v abc:/var/lib/mysql --name mysql_instance -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql 
+
+# Docker Volume (Remove, Prune)
+
+docker volume rm abc
+
+docker volume prune    :: remove unused volumes 
+
+# Docker Bind mount
+
+ docker container run -itd -v /home/ajay/bind/test:/temp/test --name mysql_instance  mysql 
+
+ docker container run -itd -v $(pwd):/temp/test --name mysql_instance  mysql   :: bind your current working directory folder 
+
+ or 
+
+docker container run -it --mount type=bind,source= $(pwd),target=/temp/test  mysql bash
+
+# Docker Networking (Bridge Network Overview)
+
+docker network ls
+
+docker network inspect bridge 
+
+docker network create test 
+
+docker container run -it --network=test ubuntu:18.04 bash 
+
+#  Docker Networking (DNS Enable)
+
+docker container run -it --network=test ubuntu:18.04 bash
+
+hostname  
+
+docker container run -it --network=test ubuntu:18.04 bash 
+ping hostname                   :: By default domain name come with custome network already enable with custome network.
+
+# Docker Networking (Host Network)
+
+docker network ls
+
+f2efa836f00e        host                host                local
+
+docker container run -it --network=host ubuntu:18.04 bash
+
+ifconfig   :: it will show you base host ip address range 192.168.21.1 
+
+docker container run -itd --network=host nginx  :: http://hostip to check nginx, this type of networking all processes and pid's seprated with host network. you cann't create multipal host network.
+
+# Docker Networking (Null Network, None Network)
+this network not use for any other network. if you not mention any network name it will assign to bridge network.
+
+docker container run -it --network=null ubuntu:18.04 bash
+
+ifconfig  :: it would be loop back  ip address : 127.0.0.1
+
+#  Docker Networking (Connect, Disconnect)
+how to assign a multipul network name to a single container?
+
+docker container run -it network bridge ubuntu:18.04 bash
+
+ifconfig  :: it will show you one eth0
+
+docker network  connect  test 2683sjbjsdw  :: it will add eth1 in '2683sjbjsdw' container
+
+docker network  connect  test 2683sjbjsdw   :: it will remove eth1 in '2683sjbjsdw' container
+
+# Docker Networking (Remove, Proun)
+
+docker network rm test  :: remove test network
+
+docker network prune :: remove unused network
+
+# Docker Registry/Repository (Insecure)
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
