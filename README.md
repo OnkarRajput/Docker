@@ -262,11 +262,11 @@ docker network  connect  test 2683sjbjsdw  :: it will add eth1 in '2683sjbjsdw' 
 docker network  connect  test 2683sjbjsdw   :: it will remove eth1 in '2683sjbjsdw' container
 
 # Docker Networking (Remove, Proun)
-
+`
 docker network rm test  :: remove test network
 
 docker network prune :: remove unused network
-
+`
 # Docker Registry/Repository (Insecure)
 
  
