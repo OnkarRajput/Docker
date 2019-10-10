@@ -108,6 +108,34 @@ docker pull onkardevops/ubuntu:18.04_latest          :: download in your system
 
 
 # How to inspect remove,inspect, list and history for the docker image
+docker images ls --format '{{.ID}} , {{.Repository}}  -{{.Tag}}'    :: view image by id, repo & Tag
+
+docker image history ubuntu                                          :: check history on ubuntu image
+
+docker image rm ubuntu:18.04
+
+docker image inspect ubuntu | less 
+
+docker image prune
+
+
+# Docker save / docker load. Diff between export and save & load &import
+
+docker image save kibana > kibana.tar  :: svae as standred  output (save all parent layer, save tag, name version, repos, all info etc..)
+
+docker image load  < kibana.tar         :: ipmort as standrrad input (import all parent layer, save tag, name version, repos, all info etc..)) 
+
+docker image import     :: single layer without all parent layer, save tag, name version, repos, all info etc..
+
+docker container expot :: save only one layer without taking volume backup 
+
+## Dockerfile
+
+ 
+# Dockerfile (add, copy, user) difference between copy and add in docker file
+
+
+
 
 
 
