@@ -213,6 +213,20 @@
 
 ## How to create Dockerfile 
 
+Writing your first Dockerfile
+To build a Docker image, you need to create a Dockerfile. It is a plain text file with instructions and arguments.  
+
+- FROM — set base image
+
+- RUN — execute command in container
+
+- ENV — set environment variable
+
+- WORKDIR — set working directory
+
+- VOLUME — create mount-point for a volume
+
+- CMD — set executable for container
  
 ## Dockerfile (add, copy, user) difference between copy and add in docker file
 
@@ -232,8 +246,12 @@
     WORKDIR /tmp                   
 
     RUN pwd >/tmp/test2.txt
+
     RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
-    RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
+
+    RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  
+    
+    #add uesr and switch user
     RUN whoiam > /tmp/test3.txt
 
     #switch in ajay user
@@ -277,6 +295,8 @@
     CMD ["/usr/sbin/sshd",  "-D"]                         
 
 ``` docker image build -t ubuntu:18.04_latest . ```
+
+``` docker images ls ```
 
 ``` docker container run -itd ubuntu:18.04_latest ```
 
@@ -513,7 +533,7 @@ assword >auth/htpasswd
 
 
 
-## Docker Compose
+# Docker Compose
 
 ``` docker-compose.yml ```
 
@@ -647,11 +667,40 @@ assword >auth/htpasswd
          ports:
            - "8000:80"
          volume:
-           - ./data/:/var/www/html/  
+           - ./data/:/usr/share/nginx/html/  
 
 
 ``` docker-compose up -d ```
 
+## Docker Compose use build, image, dockerfile in Docker-Compose.yml
+
+``` vim Dockerfile ```
+
+    FROM python:3.7-alpine
+    WORKDIR /code
+    ENV FLASK_APP app.py
+    ENV FLASK_RUN_HOST 0.0.0.0
+    RUN apk add --no-cache gcc musl-dev linux-headers
+    COPY requirements.txt requirements.txt
+    RUN pip install -r requirements.txt
+    COPY . .
+    CMD ["flask", "run"]
+
+``` docker-compose.yml ```
+
+    version: '3'
+    services:
+      web:
+        build: .
+        ports:
+          - "5000:5000"
+          image: 'onkardevops/mypythonimage:latest'
+      redis:
+        image: "redis:alpine"
+
+``` docker-compose up ```
+
+``` docker-compose exec web env ```
 
 
 
