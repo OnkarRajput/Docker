@@ -1,54 +1,54 @@
 # Docker Basic to Advance 
 
-# Below is the list with a short description of some of the most used Dockerfile instructions:
+## Below is the list with a short description of some of the most used Dockerfile instructions:
 
-# ARG 
+## ARG 
 - This instruction allows you to define variables that can be passed at build-time. You can also set a default value.
 
-# FROM 
+## FROM 
 - The base image for building a new image. This instruction must be the first non-comment instruction in the Dockerfile. The only exception from this rule is when you want to use a variable in the FROM argument. In this case, FROM can be preceded by one or more ARG instructions.
 ```FROM ubuntu:latest```
 
-# LABEL 
+## LABEL 
 - Used to add metadata to an image, such as description, version, author ..etc. You can specify more than one LABEL, and each LABEL instruction is a key-value pair.
 ```LABEL maintainer=someone@xyz.xyz"```
 
-# RUN 
+## RUN 
 - The commands specified in this instruction will be executed during the build process. Each RUN instruction creates a new layer on top of the current image.
 ```RUN apt-get update && apt-get upgrade -y && apt-get install -y nginx && rm -rf /var/lib/apt/lists/* ```
 
-# ADD 
+## ADD 
  - Used to copy files and directories from the specified source to the specified destination on the docker image. The source can be local files or directories or an URL. If the source is a local tar archive, then it is automatically unpacked into the Docker image.
 
-# COPY 
+## COPY 
 - Similar to ADD but the source can be only a local file or directory.
 
-# ENV 
+## ENV 
 - This instruction allows you to define an environment variable.
 
-# CMD 
+## CMD 
 - Used to specify a command that will be executed when you run a container. You can use only one CMD instruction in your Dockerfile.
 
-# ENTRYPOINT 
+## ENTRYPOINT 
 - Similar to CMD, this instruction defines what command will be executed when running a container.
 
-# WORKDIR 
+## WORKDIR 
 - This directive sets the current working directory for the RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
   ```WORKDIR /home```
-# USER 
+## USER 
 - Set the username or UID to use when running any following RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
   ```USER docker```
-# VOLUME 
+## VOLUME 
 - Enables you to mount a host machine directory to the container.
 
-# EXPOSE 
+## EXPOSE 
 - Used to specify the port on which the container listens at runtime.
 
-To, exclude files and directories from being added to the image, create a .dockerignore file in the context directory. The syntax of the .dockerignore is similar to the one of the Git’s .gitignore file.
+- To, exclude files and directories from being added to the image, create a .dockerignore file in the context directory. The syntax of the .dockerignore is similar to the one of the Git’s .gitignore file.
 
-## create a container in background, stop,start,detach container
+# create a container in background, stop,start,detach container
 
-Usage:	docker container COMMAND
+- Usage:	docker container COMMAND
 
 ``` docker container list```
 
@@ -68,12 +68,12 @@ Usage:	docker container COMMAND
 
 ``` docker container stop 8e76cf05adee ```
 
-``` docker container start 8e76cf05adee ```                     -
+``` docker container start 8e76cf05adee ```                     
 - start stopped container
 
-``` detach container Ctrl+p+q ```
+``` detach container "Ctrl+p+q" ```
 
- # what's going on inside container
+ ## what's going on inside container
  ``` docker container top 8e76cf05adee ```                        
  - Display the running processes of a container
  
@@ -86,7 +86,7 @@ Usage:	docker container COMMAND
 ``` docker container logs 8e76cf05adee  ```                        
 - Fetch the logs of a container
       
-# Docker port mapping, rename container, restart container, exec container
+## Docker port mapping, rename container, restart container, exec container
  
  ``` docker container run -d -p 80:8081 --name test_nginx nginx ```       
  - run nginx container with port 80 to 8081 name  test_nginx
@@ -100,7 +100,7 @@ Usage:	docker container COMMAND
  ``` docker container restart  8e76cf05adee ```                   
  - restart existing container
  
-# Attach to running container, kill, wait, pause, unpause, prune, port
+## Attach to running container, kill, wait, pause, unpause, prune, port
   
 ``` docker container attach 8e76cf05adee ```             
 - attach container inside the env.
@@ -126,7 +126,7 @@ Usage:	docker container COMMAND
 ``` docker container port container_id/container_name ```
 - check the bind port with your host machine 
  
- # create docker container, diff docker container and copy file into container
+ ## create docker container, diff docker container and copy file into container
  
 ``` docker container diff 8e76cf05adee ```         
 - It'll show you modify files system inside container files/directories (A : add, C: create, D: delete)
@@ -141,7 +141,7 @@ Usage:	docker container COMMAND
 ``` docker container attach 8e76cf05adee ```          
 - check copied files inside container
 
-# Export/Import docker container
+## Export/Import docker container
 
 ``` docker container export 8e76cf05adee > export_image.tar  ```   
 - Export your container images with .tar file
@@ -158,7 +158,7 @@ Usage:	docker container COMMAND
 - to run the new_export_image 
 
 
-# how to create docker image from running container (docker commit)
+## how to create docker image from running container (docker commit)
 
 ``` docker container commit --author "Ajay Rajput" -m "this is new test image" 8e76cf05adee new_commit_images  ```
 - commit image
@@ -166,7 +166,7 @@ Usage:	docker container COMMAND
 ``` docker container run -it new_commit_images /bin/bash ```
 
 
-# How to push image on docker hub, image tag, image pull, docker login
+## How to push image on docker hub, image tag, image pull, docker login
 
 ``` docker pull ubuntu:18.04   ```          
 - pull image from docker hub with sepific tag like :18.04
@@ -183,7 +183,7 @@ Usage:	docker container COMMAND
 - download in your system
 
 
-# How to inspect remove,inspect, list and history for the docker image
+## How to inspect remove,inspect, list and history for the docker image
 ``` docker images ls --format '{{.ID}} , {{.Repository}}  -{{.Tag}}'  ```  
 - view image by id, repo & Tag
 
@@ -197,7 +197,7 @@ Usage:	docker container COMMAND
 ``` docker image prune ```
 
 
-# Docker save / docker load. Diff between export and save & load &import
+## Docker save / docker load. Diff between export and save & load &import
 
 ``` docker image save kibana > kibana.tar ``` 
 - save as standred  output (save all parent layer, save tag, name version, repos, all info etc..)
@@ -214,7 +214,7 @@ Usage:	docker container COMMAND
 ## How to create Dockerfile 
 
  
-# Dockerfile (add, copy, user) difference between copy and add in docker file
+## Dockerfile (add, copy, user) difference between copy and add in docker file
 
 
     FROM ubuntu:18.04
@@ -253,7 +253,7 @@ Usage:	docker container COMMAND
 
 
 
-# Dockerfile ( Expose and create a SSH container using dockerfile )
+## Dockerfile ( Expose and create a SSH container using dockerfile )
 
     FROM ubuntu:18.04
 
@@ -282,7 +282,7 @@ Usage:	docker container COMMAND
 
 ``` docker container ls ```
 
-# Dockerfile (Entrypoint)
+## Dockerfile (Entrypoint)
 
     FROM ubuntu:18.04
 
@@ -303,7 +303,7 @@ Usage:	docker container COMMAND
     ENTRYPOINT ["/tmp/tesh.sh"]
 
 
-# Docker Volume ( Docker Storage), mysql data persist in docker container
+## Docker Volume ( Docker Storage), mysql data persist in docker container
 
 ``` docker container run --name mysql_instance -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql ```
 
@@ -313,16 +313,16 @@ Usage:	docker container COMMAND
 
 ``` docker volume inspect abc ```
 
-```` docker container run -itd -v abc:/var/lib/mysql --name mysql_instance -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql ```
+``` docker container run -itd -v abc:/var/lib/mysql --name mysql_instance -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql ```
 
-# Docker Volume (Remove, Prune)
+## Docker Volume (Remove, Prune)
 
 ``` docker volume rm abc ```
 
 ``` docker volume prune ```   
 - remove unused volumes 
 
-# Docker Bind mount
+## Docker Bind mount
 
 ``` docker container run -itd -v /home/ajay/bind/test:/temp/test --name mysql_instance  mysql ```
 
@@ -334,7 +334,7 @@ Usage:	docker container COMMAND
 ``` docker container run -it --mount type=bind,source= $(pwd),target=/temp/test  mysql bash ```
 
 
-# Docker Networking (Bridge Network Overview)
+## Docker Networking (Bridge Network Overview)
 
 ``` docker network ls ```
 
@@ -344,7 +344,7 @@ Usage:	docker container COMMAND
 
 ``` docker container run -it --network=test ubuntu:18.04 bash ```
 
-#  Docker Networking (DNS Enable)
+##  Docker Networking (DNS Enable)
 
 ``` docker container run -it --network=test ubuntu:18.04 bash ```
 
@@ -356,7 +356,7 @@ Usage:	docker container COMMAND
 
 - By default domain name come with custome network already enable with custome network.
 
-# Docker Networking (Host Network)
+## Docker Networking (Host Network)
 
 ``` docker network ls ```
 
@@ -372,15 +372,15 @@ Usage:	docker container COMMAND
 
 - http://hostip to check nginx, this type of networking all processes and pid's seprated with host network. you cann't create multipal host network.
 
-# Docker Networking (Null Network, None Network)
+## Docker Networking (Null Network, None Network)
 this network not use for any other network. if you not mention any network name it will assign to bridge network.
 
-```` docker container run -it --network=null ubuntu:18.04 bash ```
+``` docker container run -it --network=null ubuntu:18.04 bash ```
 
 ``` ifconfig  ```
 - it would be loop back  ip address : 127.0.0.1
 
-#  Docker Networking (Connect, Disconnect)
+##  Docker Networking (Connect, Disconnect)
 how to assign a multipul network name to a single container?
 
 ``` docker container run -it network bridge ubuntu:18.04 bash ```
@@ -394,7 +394,7 @@ how to assign a multipul network name to a single container?
 ``` docker network  connect  test 2683sjbjsdw ```  
 - it will remove eth1 in '2683sjbjsdw' container
 
-# Docker Networking (Remove, Proun)
+## Docker Networking (Remove, Proun)
 
 ``` docker network rm test ``` 
 - remove test network
@@ -402,7 +402,7 @@ how to assign a multipul network name to a single container?
 ``` docker network prune ```
 - remove unused network
 
-# Docker Registry/Repository (Insecure)
+## Docker Registry/Repository (Insecure)
 
 ``` docker container run -d -p 5000:5000 --name local_registry registry ```        
 - volume will create automatic.
@@ -446,7 +446,7 @@ how to assign a multipul network name to a single container?
 
 ``` docker pull 10.0.2.11:5000/mysql ```
 
-# Docker Registry/Repository (secure)
+## Docker Registry/Repository (secure)
 
 ``` mkdir certs ```
 
@@ -468,24 +468,27 @@ how to assign a multipul network name to a single container?
 
 ``` cp certs/domain.crt /etc/docker/certs.d/repo.docker.local:5000/ca.crt ```
 
-```` sudo service docker restart ```
+``` sudo service docker restart ```
 
 ``` docker container run -d  -p 5000:5000 --name secure_registry -v $(pwd)/certs/:/certs -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key registry ```
 
 ``` docker image tag apache repo.docker.local:5000/apache  ```
 
 ``` vim /etc/hosts ```
+
 10.0.0.2 repo.docker.local
 
 ``` docker image push repo.docker.local:5000/apache ```
 
 
-# Docker Registry With Basic Authentication
+## Docker Registry With Basic Authentication
 
 ``` mkdir auth ```
 
+`
 docker container run --entrypoint htpasswd  registry -bnB  ajay p
 assword >auth/htpasswd  
+`
 
 - b means run in batch mode, n means show output in display and B means bcrypt ```
 
@@ -502,6 +505,7 @@ assword >auth/htpasswd
 ``` user : ajay ```
 ``` password : password ```
 
+
 ``` docker image push repo.docker.local:5000/apache ```
 
 ``` docker logout repo.docker.local:5000 ```  
@@ -511,7 +515,7 @@ assword >auth/htpasswd
 
 ## Docker Compose
 
-``` docker-compose.yml ``
+``` docker-compose.yml ```
 
     #version means which docker engin supports 
     version: '3'          
@@ -556,7 +560,7 @@ assword >auth/htpasswd
 ``` docker-compose -f docker-compose2.json up -d  ```
 - yml super set of json file
 
-# Docker Compose  Basic Command ( create, start, stop, rm, up, down)
+## Docker Compose  Basic Command ( create, start, stop, rm, up, down)
 
 ``` docker-compose create ```
 - it will create container but not in run staus , also it will not create any network by default.
@@ -576,7 +580,7 @@ assword >auth/htpasswd
 ``` docker-compose down ```
 - remove container but not remove volume
 
-# Docker Compose ( ps, pause, unpause )
+## Docker Compose ( ps, pause, unpause )
 
 ``` docker-compose ps ```
 - list docker containers state
@@ -587,7 +591,7 @@ assword >auth/htpasswd
 ``` docker-compose unpause  ```
 - paused container to unpaused state up
 
-# Docker Compose Kill, exec, run, help, log
+## Docker Compose Kill, exec, run, help, log
 
 ``` docker-compose kill ```
 - kill running container
@@ -613,7 +617,7 @@ assword >auth/htpasswd
 ``` docker-compose pull ```   
 - download images from docker hub
 
-# Docker Compose  Scale, Top
+## Docker Compose  Scale, Top
 
 
 ``` docker-compose.yml ```
