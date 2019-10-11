@@ -117,7 +117,7 @@ Usage:	docker container COMMAND
 ``` docker container pause 8e76cf05adee ```                 
 - Pause resources for your container
  
-```` docker container unpause 8e76cf05adee ```                
+``` docker container unpause 8e76cf05adee ```                
 - unpause your container resources 
  
 ``` docker container prune ```                              
@@ -255,25 +255,26 @@ Usage:	docker container COMMAND
 
 # Dockerfile ( Expose and create a SSH container using dockerfile )
 
-FROM ubuntu:18.04
+    FROM ubuntu:18.04
 
-LABEL name : "Ajay Rajput"
+    LABEL name : "Ajay Rajput"
 
-LABEL email : "onkar.devops@gmail.com"
+    LABEL email : "onkar.devops@gmail.com"
 
-ENV NAME ajay 
+    ENV NAME ajay 
 
-ENV PASS password@123
+    ENV PASS password@123
 
-RUN apt-get update && apt-get install -y openssh-server 
+    RUN apt-get update && apt-get install -y openssh-server 
+    
+    #add uesr and switch user
+    RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  
 
-RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
-
-#open ports
-EXPOSE 22 443 80                   
+    #open ports
+    EXPOSE 22 443 80                   
  
-#Define default command. 
-CMD ["/usr/sbin/sshd",  "-D"]                         
+    #Define default command. 
+    CMD ["/usr/sbin/sshd",  "-D"]                         
 
 ``` docker image build -t ubuntu:18.04_latest . ```
 
@@ -283,23 +284,23 @@ CMD ["/usr/sbin/sshd",  "-D"]
 
 # Dockerfile (Entrypoint)
 
-FROM ubuntu:18.04
+    FROM ubuntu:18.04
 
-LABEL name : "Ajay Rajput"
+    LABEL name : "Ajay Rajput"
 
-LABEL email : "onkar.devops@gmail.com"
+    LABEL email : "onkar.devops@gmail.com"
 
-ENV NAME ajay 
+    ENV NAME ajay 
 
-ENV PASS password@123
+    ENV PASS password@123
 
-RUN mkdir -p /var/run/sshd
+    RUN mkdir -p /var/run/sshd
 
-RUN apt-get update && apt-get install -y python tee
+    RUN apt-get update && apt-get install -y python tee
 
-COPY test.sh /tmp/
+    COPY test.sh /tmp/
 
-ENTRYPOINT ["/tmp/tesh.sh"]
+    ENTRYPOINT ["/tmp/tesh.sh"]
 
 
 # Docker Volume ( Docker Storage), mysql data persist in docker container
@@ -364,9 +365,11 @@ ENTRYPOINT ["/tmp/tesh.sh"]
 ``` docker container run -it --network=host ubuntu:18.04 bash ```
 
 ``` ifconfig  ``` 
+
 - it will show you base host ip address range 192.168.21.1 
 
-``` docker container run -itd --network=host nginx ```  
+``` docker container run -itd --network=host nginx ``` 
+
 - http://hostip to check nginx, this type of networking all processes and pid's seprated with host network. you cann't create multipal host network.
 
 # Docker Networking (Null Network, None Network)
@@ -510,35 +513,35 @@ assword >auth/htpasswd
 
 ``` docker-compose.yml ``
 
-#version means which docker engin supports 
-version: '3'          
-services:             
-  webapp1:
-     image: nginx
-     ports:
-     - "8080:80"
+    #version means which docker engin supports 
+    version: '3'          
+    services:             
+          webapp1:
+         image: nginx
+         ports:
+         - "8080:80"
 
-  webapp2:
-     image: nginx
-     ports:
-     - "8001:81"
+      webapp2:
+         image: nginx
+         ports:
+         - "8001:81"
 
 
 ``` docker-compose up -d    ```    
 
 ``` docker-compose.yml ```
 
-version: '3'           
-services:             
-  webapp1:
-     image: nginx
-     ports:
-     - "8083:80"           
+    version: '3'           
+    services:             
+      webapp1:
+         image: nginx
+         ports:
+         - "8083:80"           
 
-  webapp2:
-     image: nginx
-     ports:
-     - "8001:81"
+      webapp2:
+         image: nginx
+         ports:
+         - "8001:81"
 
 - modify port only in existing container     
 
@@ -615,13 +618,13 @@ services:
 
 ``` docker-compose.yml ```
 
-version: '3'           
-services:             
-  webapp1:
-     image: nginx
+    version: '3'           
+    services:             
+      webapp1:
+         image: nginx
 
-  webapp2:
-     image: nginx
+      webapp2:
+         image: nginx
 
 ``` docker-compose scale webapp1=2 webapp2=6 ```
 
@@ -633,14 +636,14 @@ services:
 
 ``` vim docker-compose.yml ```
 
-version: '3'           
-services:             
-  webapp1:
-     image: nginx
-     ports:
-       - "8000:80"
-     volume:
-       - ./data/:/var/www/html/  
+    version: '3'           
+    services:             
+      webapp1:
+         image: nginx
+         ports:
+           - "8000:80"
+         volume:
+           - ./data/:/var/www/html/  
 
 
 ``` docker-compose up -d ```
