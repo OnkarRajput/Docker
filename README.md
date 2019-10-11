@@ -1,5 +1,47 @@
 # Docker Basic to Advance 
 
+# Below is the list with a short description of some of the most used Dockerfile instructions:
+
+# ARG 
+- This instruction allows you to define variables that can be passed at build-time. You can also set a default value.
+
+# FROM 
+- The base image for building a new image. This instruction must be the first non-comment instruction in the Dockerfile. The only exception from this rule is when you want to use a variable in the FROM argument. In this case, FROM can be preceded by one or more ARG instructions.
+
+# LABEL 
+- Used to add metadata to an image, such as description, version, author ..etc. You can specify more than one LABEL, and each LABEL instruction is a key-value pair.
+
+# RUN 
+- The commands specified in this instruction will be executed during the build process. Each RUN instruction creates a new layer on top of the current image.
+
+# ADD 
+ - Used to copy files and directories from the specified source to the specified destination on the docker image. The source can be local files or directories or an URL. If the source is a local tar archive, then it is automatically unpacked into the Docker image.
+
+# COPY 
+- Similar to ADD but the source can be only a local file or directory.
+
+# ENV 
+- This instruction allows you to define an environment variable.
+
+# CMD 
+- Used to specify a command that will be executed when you run a container. You can use only one CMD instruction in your Dockerfile.
+
+# ENTRYPOINT 
+- Similar to CMD, this instruction defines what command will be executed when running a container.
+
+# WORKDIR 
+- This directive sets the current working directory for the RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
+
+# USER 
+- Set the username or UID to use when running any following RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
+
+# VOLUME 
+- Enables you to mount a host machine directory to the container.
+
+# EXPOSE 
+- Used to specify the port on which the container listens at runtime.
+
+To, exclude files and directories from being added to the image, create a .dockerignore file in the context directory. The syntax of the .dockerignore is similar to the one of the Git’s .gitignore file.
 
 ## create a container in background, stop,start,detach container
 
@@ -135,34 +177,59 @@ docker container expot :: save only one layer without taking volume backup
 # Dockerfile (add, copy, user) difference between copy and add in docker file
 
 FROM ubuntu:18.04
+
 LABEL name : "Ajay Rajput"
+
 LABEL email : "onkar.devops@gmail.com"
-ENV NAME ajay 
+
+ENV NAME ajay
+
 ENV PASS password@123
+
 RUN pwd >/tmp/test.txt
+
 RUN cd /tmp
+
 RUN pwd >/tmp/test1.txt
-WORKDIR /tmp                   :: Define working directory 
+
+WORKDIR /tmp                   :: Define working directory
+
 RUN pwd >/tmp/test2.txt
+
 RUN apt-get update && apt-get install -y apache2 && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
+
 RUN whoiam > /tmp/test3.txt
+
 USER $NAME                                               :: switch in ajay user
+
 RUN whoami  > /tmp/test3.txt
+
 COPY test.tar /tmp                         :: COPY only copy test.tar file to /tmp
+
 ADD test1.tar /tmp                         :: ADD extract test1.tar to  /tmp  
+
 CMD ["/bin/bash"]                       :: Define default command.
 
 # Dockerfile ( Expose and create a SSH container using dockerfile )
 
 FROM ubuntu:18.04
+
 LABEL name : "Ajay Rajput"
+
 LABEL email : "onkar.devops@gmail.com"
+
 ENV NAME ajay 
+
 ENV PASS password@123
+
 RUN apt-get update && apt-get install -y openssh-server 
+
 RUN useradd -d /home/ajay -g root -G sudo -m -p $(echo "$pass" | openssl passwd -l -stdin) $NAME  :: add uesr and switch user
+
 EXPOSE 22 443 80                   :: open ports
+ 
  CMD ["/usr/sbin/sshd",  "-D"]                         :: Define default command.
 
 docker image build -t ubuntu:18.04_latest .
@@ -174,13 +241,21 @@ docker container ls
 # Dockerfile (Entrypoint)
 
 FROM ubuntu:18.04
+
 LABEL name : "Ajay Rajput"
+
 LABEL email : "onkar.devops@gmail.com"
+
 ENV NAME ajay 
+
 ENV PASS password@123
+
 RUN mkdir -p /var/run/sshd
+
 RUN apt-get update && apt-get install -y python tee
+
 COPY test.sh /tmp/
+
 ENTRYPOINT ["/tmp/tesh.sh"]
 
 
