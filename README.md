@@ -58,24 +58,24 @@ Usage:	docker container COMMAND
 
 ```docker container ls -a```
 
-```docker container rm 8e76cf05adee``
+```docker container rm 8e76cf05adee```
 
-````docker container rm $(docker container ls -aq)````
+```docker container rm $(docker container ls -aq)```
 
-````docker container run -d -it ubuntu /bin/bash ````
+```docker container run -d -it ubuntu /bin/bash ```
 
 ````docker container run -it ubuntu /bin/bash````
 
 ````docker container stop 8e76cf05adee ```
 
-````docker container start 8e76cf05adee```                     :: start stopped container
+```docker container start 8e76cf05adee```                     :: start stopped container
 
-``detach container Ctrl+p+q``
+```detach container Ctrl+p+q```
 
  # what's going on inside container
- docker container top 8e76cf05adee                         :: Display the running processes of a container
+ ``` docker container top 8e76cf05adee ```                        :: Display the running processes of a container
  
- docker container stats                                    :: Display a live stream of container(s) resource usage statistics
+ ``` docker container stats ```                                    :: Display a live stream of container(s) resource usage statistics
  
  docker container inspact 8e76cf05adee                     :: Display detailed information on one or more containers
 
