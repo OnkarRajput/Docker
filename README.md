@@ -629,9 +629,9 @@ services:
 
 ``` docker-compose top ```
 
-# Docker Compose : Bind Mount
+## Docker Compose : Bind Mount
 
-``` docker-compose.yml ```
+``` vim docker-compose.yml ```
 
 version: '3'           
 services:             
