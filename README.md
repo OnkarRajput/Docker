@@ -31,7 +31,7 @@
 
 # WORKDIR 
 - This directive sets the current working directory for the RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
-
+  ```WORKDIR /home```
 # USER 
 - Set the username or UID to use when running any following RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
 
