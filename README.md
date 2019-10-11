@@ -7,12 +7,15 @@
 
 # FROM 
 - The base image for building a new image. This instruction must be the first non-comment instruction in the Dockerfile. The only exception from this rule is when you want to use a variable in the FROM argument. In this case, FROM can be preceded by one or more ARG instructions.
+```FROM ubuntu:latest```
 
 # LABEL 
 - Used to add metadata to an image, such as description, version, author ..etc. You can specify more than one LABEL, and each LABEL instruction is a key-value pair.
+```LABEL maintainer=someone@xyz.xyz"```
 
 # RUN 
 - The commands specified in this instruction will be executed during the build process. Each RUN instruction creates a new layer on top of the current image.
+```RUN apt-get update && apt-get upgrade -y && apt-get install -y nginx && rm -rf /var/lib/apt/lists/* ```
 
 # ADD 
  - Used to copy files and directories from the specified source to the specified destination on the docker image. The source can be local files or directories or an URL. If the source is a local tar archive, then it is automatically unpacked into the Docker image.
@@ -34,7 +37,7 @@
   ```WORKDIR /home```
 # USER 
 - Set the username or UID to use when running any following RUN, CMD, ENTRYPOINT, COPY, and ADD instructions.
-
+  ```USER docker```
 # VOLUME 
 - Enables you to mount a host machine directory to the container.
 
@@ -47,27 +50,27 @@ To, exclude files and directories from being added to the image, create a .docke
 
 Usage:	docker container COMMAND
 
-docker container list
+```docker container list```
 
-docker image ls
+```docker image ls```
 
-docker container ls    
+```docker container ls```    
 
-docker container ls -a
+```docker container ls -a```
 
-docker container rm 8e76cf05adee
+```docker container rm 8e76cf05adee``
 
-docker container rm $(docker container ls -aq)
+````docker container rm $(docker container ls -aq)````
 
-docker container run -d -it ubuntu /bin/bash  
+````docker container run -d -it ubuntu /bin/bash ````
 
-docker container run -it ubuntu /bin/bash
+````docker container run -it ubuntu /bin/bash````
 
-docker container stop 8e76cf05adee 
+````docker container stop 8e76cf05adee ```
 
-docker container start 8e76cf05adee                     :: start stopped container
+````docker container start 8e76cf05adee```                     :: start stopped container
 
-detach container Ctrl+p+q
+``detach container Ctrl+p+q``
 
  # what's going on inside container
  docker container top 8e76cf05adee                         :: Display the running processes of a container
